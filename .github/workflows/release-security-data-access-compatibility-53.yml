@@ -54,7 +54,7 @@ jobs:
         id: hash-code
         shell: bash
         run: |
-          echo "::set-output name=hash-code::$(sha256sum artifacts/*.nupkg | base64 -w0)"
+          echo "::set-output name=hash-code::$(sha256sum *.nupkg | base64 -w0)"
 
       - name: Upload Packages as Artifacts
         if: success()
