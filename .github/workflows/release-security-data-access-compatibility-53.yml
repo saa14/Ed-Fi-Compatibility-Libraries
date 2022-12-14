@@ -48,13 +48,13 @@ jobs:
         if: success()
         run: |
           "Packing ${{ env.PACKAGE_NAME }} NuGet Package" | Write-Output
-          dotnet pack --output . --configuration Release
+          dotnet pack --output ./artifacts/ --configuration Release
 
       - name: Generate hash for NuGet package
         id: hash-code
         shell: bash
         run: |
-          echo "::set-output name=hash-code::$(sha256sum *.nupkg | base64 -w0)"
+          echo "::set-output name=hash-code::$(sha256sum artifacts/*.nupkg | base64 -w0)"
           ls
 
       - name: Upload Packages as Artifacts
@@ -62,7 +62,7 @@ jobs:
         uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8 # v3.1.0
         with:
           name: "${{ env.PACKAGE_NAME }}-NuGet"
-          path: ./*.nupkg
+          path: artifacts/*.nupkg
           if-no-files-found: error
           retention-days: 30
 
