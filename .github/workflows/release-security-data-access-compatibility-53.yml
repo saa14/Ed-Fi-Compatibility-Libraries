@@ -17,6 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
+        working-directory: ./NuGet/EdFi.Security.DataAccess/53/
         shell: pwsh
     outputs:
       hash-code: ${{ steps.hash-code.outputs.hash-code }}
