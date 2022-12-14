@@ -61,8 +61,7 @@ jobs:
         uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8 # v3.1.0
         with:
           name: "${{ env.PACKAGE_NAME }}-NuGet"
-          path: ./*.nupkg 
-          working-directory: ./NuGet/EdFi.Security.DataAccess/53/
+          path: ./NuGet/EdFi.Security.DataAccess/53/*.nupkg 
           if-no-files-found: error
           retention-days: 30
 
