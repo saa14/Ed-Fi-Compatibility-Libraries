@@ -204,14 +204,14 @@ jobs:
       - name: Install-credential-handler
         run: iex "& { $(irm https://aka.ms/install-artifacts-credprovider.ps1) } -AddNetfx"
 
-      - name: Push Package to Azure Artifacts
-        run: |
-          $nuGetApiKey = "${{ env.ARTIFACTS_API_KEY }}"
-          $nuGetFeed = "${{ env.ARTIFACTS_FEED_URL }}"
-          $artifact = (Get-ChildItem -Path $_ -Name -Include *.nupkg)
+      # - name: Push Package to Azure Artifacts
+      #   run: |
+      #     $nuGetApiKey = "${{ env.ARTIFACTS_API_KEY }}"
+      #     $nuGetFeed = "${{ env.ARTIFACTS_FEED_URL }}"
+      #     $artifact = (Get-ChildItem -Path $_ -Name -Include *.nupkg)
 
-          $artifact | ForEach-Object {
-              $packageFile = $_
-              Write-Host "Pushing $packageFile to $nuGetFeed"
-              dotnet nuget push $packageFile --api-key $nuGetApiKey --source $nuGetFeed
-           }
+      #     $artifact | ForEach-Object {
+      #         $packageFile = $_
+      #         Write-Host "Pushing $packageFile to $nuGetFeed"
+      #         dotnet nuget push $packageFile --api-key $nuGetApiKey --source $nuGetFeed
+      #      }
