@@ -100,7 +100,7 @@ jobs:
           &$out generate `
               -b ./ `
               -bl ./buildfilelist.txt `
-              -bc "./Application/EdFi.$packageName" `
+              -bc "./NuGet/EdFi.$packageName" `
               -pn "EdFi.Suite3.$packageName" `
               -pv $version `
               -nsb https://ed-fi.org `
