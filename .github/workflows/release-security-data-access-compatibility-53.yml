@@ -20,7 +20,6 @@ jobs:
         working-directory: ./NuGet/EdFi.Security.DataAccess/53/
         shell: pwsh
     outputs:
-      hash-code: ${{ steps.hash-code.outputs.hash-code }}
       security-data-access-version: 5.3.43
 
     steps:
@@ -72,8 +71,6 @@ jobs:
     permissions:
       actions: read
       contents: write
-    outputs:
-      sbom-hash-code: ${{ steps.sbom-hash-code.outputs.sbom-hash-code }}
     steps:
       - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # v3.0.2
 
@@ -139,7 +136,7 @@ jobs:
         with:
           name: "${{ env.PACKAGE_NAME }}-SBOM"
           path: ${{ env.MANIFEST_FILE }}
-          sha256: "${{ needs.sbom-create.outputs.sbom-hash-code }}"
+          sha256: "${{ steps.sbom-hash-code.outputs.sbom-hash-code }}"
 
       - name: Attach to release
         shell: pwsh
@@ -179,7 +176,7 @@ jobs:
       contents: write
     uses: Ed-Fi-Alliance-OSS/slsa-github-generator/.github/workflows/generator_generic_slsa3.yml@v1.2.0
     with:
-      base64-subjects: ${{ needs.pack.outputs.hash-code }}
+      base64-subjects: ${{ steps.hash-code.outputs.hash-code }}
       attestation-name: Security.DataAccess.intoto.jsonl
       upload-assets: true
       # TODO: remove this after this issue is resolved: https://github.com/slsa-framework/slsa-github-generator/issues/876
