@@ -20,7 +20,7 @@ jobs:
         working-directory: ./NuGet/EdFi.Security.DataAccess/53/
         shell: pwsh
     outputs:
-      hash-code: ${{ steps.hash-code.outputs.hash-code }}
+      hash-code: ${{ env.hash-code }}
       security-data-access-version: 5.3.43
 
     steps:
@@ -54,7 +54,7 @@ jobs:
         id: hash-code
         shell: bash
         run: |
-          echo "::set-output name=hash-code::$(sha256sum *.nupkg | base64 -w0)"
+          echo "hash-code=$(sha256sum *.nupkg | base64 -w0)" >> $GITHUB_ENV
 
       - name: Upload Packages as Artifacts
         if: success()
@@ -73,7 +73,7 @@ jobs:
       actions: read
       contents: write
     outputs:
-      sbom-hash-code: ${{ steps.sbom-hash-code.outputs.sbom-hash-code }}
+      sbom-hash-code: ${{ env.sbom-hash-code }}
     steps:
       - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # v3.0.2
 
@@ -122,7 +122,7 @@ jobs:
         run: |
           # sha256sum returns "<hashcode>  <name of file". Split that and return only the <hashcode>.
           sbom_hash=$(sha256sum ./manifest/${{ env.MANIFEST_FILE }} | awk '{split($0,a); print a[1]}')
-          echo "::set-output name=sbom-hash-code::$sbom_hash"
+          echo "sbom-hash-code=$(sha256sum *.nupkg | base64 -w0)" >> $GITHUB_ENV
 
   sbom-attach:
     name: Attach SBOM file
