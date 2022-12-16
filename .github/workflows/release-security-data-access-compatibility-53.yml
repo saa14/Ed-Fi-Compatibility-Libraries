@@ -54,7 +54,7 @@ jobs:
         id: hash-code
         shell: bash
         run: |
-          echo "hash-code=$(sha256sum *.nupkg | base64 -w0)" >> $env:GITHUB_OUTPUT
+          echo "hash-code=$(sha256sum *.nupkg | base64 -w0)" >> $GITHUB_OUTPUT
 
       - name: Upload Packages as Artifacts
         if: success()
@@ -122,7 +122,7 @@ jobs:
         run: |
           # sha256sum returns "<hashcode>  <name of file". Split that and return only the <hashcode>.
           sbom_hash=$(sha256sum ./manifest/${{ env.MANIFEST_FILE }} | awk '{split($0,a); print a[1]}')
-          echo "sbom-hash-code=$sbom_hash" >> $env:GITHUB_OUTPUT
+          echo "sbom-hash-code=$sbom_hash" >> $GITHUB_OUTPUT
 
   sbom-attach:
     name: Attach SBOM file
